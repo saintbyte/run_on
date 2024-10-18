@@ -35,10 +35,8 @@ func Host() (string, error) {
 	} else {
 
 	}
-
 	if osKey != "" {
 		return os.Getenv("RENDER_EXTERNAL_HOSTNAME"), nil
 	}
-
 	return "", errors.New("Cant detect cloud provider")
 }
