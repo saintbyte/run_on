@@ -19,6 +19,10 @@ func Detect() string {
 	if exists {
 		return Render
 	}
+	_, exists = os.LookupEnv("X_YCF_WORKER_ID")
+	if exists {
+		return YandexCloudFunction
+	}
 	return Unknown
 }
 
@@ -33,7 +37,7 @@ func Host() (string, error) {
 	} else if hostProvider == Render {
 		osKey = "RENDER_EXTERNAL_HOSTNAME"
 	} else {
-
+		// YandexCloud
 	}
 	if osKey != "" {
 		return os.Getenv("RENDER_EXTERNAL_HOSTNAME"), nil
