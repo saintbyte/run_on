@@ -13,7 +13,7 @@ func Detect() string {
 	}
 	_, exists = os.LookupEnv("KOYEB_PUBLIC_DOMAIN")
 	if exists {
-		return Koeyb
+		return Koyeb
 	}
 	_, exists = os.LookupEnv("RENDER_EXTERNAL_HOSTNAME")
 	if exists {
@@ -32,15 +32,15 @@ func Host() (string, error) {
 	var osKey = ""
 	if hostProvider == Vercel {
 		osKey = "VERCEL_PROJECT_PRODUCTION_URL"
-	} else if hostProvider == Koeyb {
+	} else if hostProvider == Koyeb {
 		osKey = "KOYEB_PUBLIC_DOMAIN"
 	} else if hostProvider == Render {
 		osKey = "RENDER_EXTERNAL_HOSTNAME"
-	} else {
-		// YandexCloud
+	} else if hostProvider == YandexCloudFunction {
+		return "", errors.New("Yandex Cloud Function has no external hostname env var")
 	}
 	if osKey != "" {
-		return os.Getenv("RENDER_EXTERNAL_HOSTNAME"), nil
+		return os.Getenv(osKey), nil
 	}
-	return "", errors.New("Cant detect cloud provider")
+	return "", errors.New("cant detect cloud provider")
 }
